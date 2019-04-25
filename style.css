@@ -1,5 +1,16 @@
-body {
+:root {
+  --accent: rgb(74, 202, 202);
+}
+
+h1, h2 {
   font-family: Lato;
+}
+
+body {
   background: #333;
-  color: rgb(74, 202, 202);
+  color: var(--accent);
+}
+
+#tree {
+  border: 1px solid var(--accent);
 }
