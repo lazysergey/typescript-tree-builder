@@ -1,5 +1,5 @@
 export class Person {
-  private _ancestors: Person[] | String[];
+  private _ancestors: Person[];
   private aname: string
   constructor(
     name: string,
@@ -7,8 +7,10 @@ export class Person {
     public children: Person[],
     public depth: number
   ) {
+    console.log(`%ccreating ${name}`, "background: black;color: white;padding:5px;");
     this._ancestors = [];
-    this.aname = name
+    this.aname = name;
+    this.setAncestorsForAllParents(Math.random() * 255, Math.random() * 255, Math.random() * 255);
   }
 
   getParent() {
@@ -24,12 +26,22 @@ export class Person {
     this._ancestors.push(ancestor.name);
   }
 
-  get name(){
+  get name() {
     return this.aname;
   }
 
   addChildren(child) {
     this.children.push(child);
   }
+
+  private setAncestorsForAllParents(color1, color2, color3) {
+    let node = this;
+    while (node.parent) {
+      console.log(`%c${this.name} (${this.depth}) > ${node.parent.name}`, `background: rgba(${color1.toFixed(0)},${color2.toFixed(0)},${color3.toFixed(0)})`);
+      node.parent.addAncestor(this);      
+      node = node.parent; 
+    }
+  }
+
 
 }
