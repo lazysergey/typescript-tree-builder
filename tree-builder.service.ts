@@ -2,7 +2,7 @@ import { Person } from "./person";
 
 export class TreeBuilderService {
   private _result: Person[] = [];
-  private _input: {[name: string]: string[]};
+  private _input: { [name: string]: string[] };
   constructor() { }
 
   buildTree(input): Person[] {
@@ -12,7 +12,22 @@ export class TreeBuilderService {
         this._createNodes(root);
       }
     );
+
+    this._result.forEach(node => {
+      this._buildHtml(node, null);
+    });
+
     return this._result;
+  }
+
+  private _buildHtml(node: Person, parentElement: HTMLElement) {
+    parentElement = parentElement ? parentElement : document.getElementById('tree');
+    const newUlElement = document.createElement("ul");
+    newUlElement.innerHTML += `<li title="depth: ${node.depth}">${node.name}</li>`;
+    parentElement.append(newUlElement);
+    node.children.forEach(
+      child => this._buildHtml(child, newUlElement || parentElement)
+    )
   }
 
   private _createNodes(name: string, parent: Person = null) {
