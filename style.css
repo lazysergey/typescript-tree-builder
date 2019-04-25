@@ -1,3 +1,5 @@
-h1, h2 {
+body {
   font-family: Lato;
+  background: #333;
+  color: rgb(74, 202, 202);
 }
