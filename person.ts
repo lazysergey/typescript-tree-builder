@@ -1,46 +1,65 @@
 export class Person {
-  private _ancestors: Person[];
-  private aname: string
+  private _descendants: Person[];
+  private _name: string;
+  private _parent: Person;
+  private _children: Person[];
+  private _depth: number;
+
   constructor(
     name: string,
-    public parent: Person,
-    public children: Person[],
-    public depth: number
+    parent: Person,
+    children: Person[],
+    depth: number
   ) {
     console.log(`%c--- new Person: ${name} ---`, "border: 1px solid red;color: #444;");
-    this._ancestors = [];
-    this.aname = name;
-    this.setAncestorsForAllParents(Math.random() * 255, Math.random() * 255, Math.random() * 255);
+    this._descendants = [];
+    this._name = name;
+    this._parent = parent;
+    this._children = children;
+    this._depth = depth;
+    this._setDescendantsForAllParents();
   }
 
-  getParent() {
-    return this.parent;
+  get parent() {
+    return this._parent;
   }
 
-  get ancestors() {
-    return this._ancestors;
+  get descendants() {
+    return this._descendants;
   }
 
-  addAncestor(ancestor: Person) {
-    this._ancestors.push(ancestor.name);
+  get children() {
+    return this._children;
+  }
+
+  get depth() {
+    return this._depth;
   }
 
   get name() {
-    return this.aname;
+    return this._name;
   }
 
-  addChildren(child) {
-    this.children.push(child);
+  addDescendant(descendant: Person) {
+    this._descendants.push(descendant);
   }
 
-  private setAncestorsForAllParents(color1, color2, color3) {
-    let node = this;
+  private _getRandomRGBColor() {
+    return `rgb(${this._getRandomRGBChannelValue()}, ${this._getRandomRGBChannelValue()}, ${this._getRandomRGBChannelValue()})`;
+  }
+
+  private _getRandomRGBChannelValue() {
+    const lowest = 0.8;
+    return ((Math.random() * (1 - lowest) + lowest) * 255).toFixed(0);
+  }
+
+  private _setDescendantsForAllParents() {
+    let node: Person = this;
+    const color: string = this._getRandomRGBColor();
     while (node.parent) {
-      console.log(`%cadding ancestor: ${this.name} (${this.depth}) > ${node.parent.name}`, `background: rgba(${color1.toFixed(0)},${color2.toFixed(0)},${color3.toFixed(0)})`);
-      node.parent.addAncestor(this);      
-      node = node.parent; 
+      console.log(`%cadding descendant: ${this.name} > ${node.parent.name} (depth: ${this._depth})`, `background: ${color}`);
+      node.parent.addDescendant(this);
+      node = node.parent;
     }
   }
-
-
 }
