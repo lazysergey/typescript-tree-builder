@@ -15,17 +15,21 @@ export class PersonsParseService {
 
   parsePersons(): Person[] {
     this.findRoots().forEach(
-      r => {
-        this.createNodes(r);
+      root => {
+        this.createNodes(root);
       }
     );
     return this.personsParsed;
-
   }
 
   private createNodes(name: string, parent: Person = null) {
     let arrayForCurrentNode = parent ? parent.children : this.personsParsed;
-    const newPerson = new Person(name, parent ? parent : null, [], (parent ? (parent.depth + 1) : 0));
+    const newPerson = new Person(
+      name,
+      parent ? parent : null,
+      [],
+      (parent ? (parent.depth + 1) : 0)
+    );
     arrayForCurrentNode.push(newPerson);
     if (this.personsInput[name]) {
       this.personsInput[name].forEach(child => {

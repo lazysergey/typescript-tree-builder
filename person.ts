@@ -7,7 +7,7 @@ export class Person {
     public children: Person[],
     public depth: number
   ) {
-    console.log(`%ccreating ${name}`, "background: black;color: white;padding:5px;");
+    console.log(`%c--- new Person: ${name} ---`, "border: 1px solid red;color: #444;");
     this._ancestors = [];
     this.aname = name;
     this.setAncestorsForAllParents(Math.random() * 255, Math.random() * 255, Math.random() * 255);
@@ -22,7 +22,6 @@ export class Person {
   }
 
   addAncestor(ancestor: Person) {
-    // console.log(`pushing ancestor: ${ancestor.name} to: ${this.name} depth: ${this.depth}`)
     this._ancestors.push(ancestor.name);
   }
 
@@ -37,7 +36,7 @@ export class Person {
   private setAncestorsForAllParents(color1, color2, color3) {
     let node = this;
     while (node.parent) {
-      console.log(`%c${this.name} (${this.depth}) > ${node.parent.name}`, `background: rgba(${color1.toFixed(0)},${color2.toFixed(0)},${color3.toFixed(0)})`);
+      console.log(`%cadding ancestor: ${this.name} (${this.depth}) > ${node.parent.name}`, `background: rgba(${color1.toFixed(0)},${color2.toFixed(0)},${color3.toFixed(0)})`);
       node.parent.addAncestor(this);      
       node = node.parent; 
     }
