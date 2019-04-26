@@ -22,7 +22,9 @@ const treeBuilder = new TreeBuilderService();
 const tree: Person[] = treeBuilder.buildTree(people);
 
 const inputHandler = new InputHandler();
-inputHandler.onKeyUp().subscribe(input => console.log(input));
+inputHandler.onKeyUp().subscribe(data => 
+  inputHandler.result = treeBuilder.findRelations(data.input1, data.input2)
+);
 
 console.log("========== DONE ==========");
 // console.log(tree);
