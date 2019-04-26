@@ -1,13 +1,25 @@
+:unused-colors {
+  /* --color-accent: rgb(74, 202, 202); */
+  /* --color-body: #333; */
+  /* --color-input-background: rgba(255, 255, 255, 0.15); */
+  /* --color-input-background: #444; */
+  /* --color-input-background-hover: rgba(255, 255, 255, 0.22); */
+  /* --color-input-background-hover: #555; */
+  /* --color-selection: rgba(255, 192, 203); */
+  /* --color-selection: rgb(199, 58, 58); */
+}
+
 :root {
   --color-accent: #4acaca;
-  /* --color-accent: rgb(74, 202, 202); */
   --color-body: hsl(180, 6%, 6%);
-  /* --color-body: #333; */
   --transition-duration: 0.3s;
-  --color-input-background: rgba(255, 255, 255, 0.15);
-  /* --color-input-background: #444; */
-  --color-input-background-hover: rgba(255, 255, 255, 0.3);
-  /* --color-input-background-hover: #555; */
+  --color-input-background: hsla(180, 15%, 54%, 0.07);
+  --color-input-background-hover: hsla(180, 15%, 54%, 0.11);
+  --color-selection: hsl(235, 95%, 70%);
+}
+
+::selection {
+  background: var(--color-selection);
 }
 
 * {
@@ -27,8 +39,15 @@ label {
 }
 
 #tree {
+  cursor: default;
   border: 1px solid var(--color-accent);
+  border-radius: 3px;
+  max-width: 400px;
   transition: background-color var(--transition-duration) ease-in-out;
+}
+
+#tree:hover {
+  background: var(--color-input-background);
 }
 
 #result span {
