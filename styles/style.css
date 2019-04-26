@@ -26,6 +26,11 @@ label {
   transition: background-color var(--transition-duration) ease-in-out;
 }
 
+#result span {
+  color: yellow;
+  opacity: 0.8;
+}
+
 label {
   display: block;
   margin-top: 20px;
