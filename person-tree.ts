@@ -65,11 +65,11 @@ export class PersonTree {
   public findRelations(name1: string, name2: string) {
     let person1: Person = this._findPerson(name1);
     if (!person1) {
-      return `${name1} not found`;
+      return `${name1} - name not found`;
     }
     let person2: Person = this._findPerson(name2);
     if (!person2) {
-      return `${name2} not found`;
+      return `${name2} - name not found`;
     }
 
     if(!this._isInSameRoot(name1, name2)){
@@ -93,7 +93,7 @@ export class PersonTree {
     } else {
       relationKey = "Brother";
     }
-    return `${person1.name} is <span>${this._getGrandTItle(depthDelta)}${relationKey}</span> of ${person2.name}`
+    return `${person1.name} is the <span>${this._getGrandTItle(depthDelta)}${relationKey}</span> of ${person2.name}`
   }
 
   private _getGrandTItle(depthDelta: number):string{

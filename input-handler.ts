@@ -27,8 +27,8 @@ export class InputHandler {
     }
 
     private _subscribeToOnClick(target: HTMLInputElement) {
-        return fromEvent(target, "mouseup").subscribe(event =>
-            (event.target as HTMLInputElement).setSelectionRange(0, (event.target as HTMLInputElement).value.length)
+        return fromEvent(target, "focus").subscribe(event => 
+        (event.target as HTMLInputElement).setSelectionRange(0, (event.target as HTMLInputElement).value.length)
         )
     }
 
