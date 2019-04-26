@@ -1,5 +1,6 @@
 :root {
-  --color-accent: rgb(74, 202, 202);
+  --color-accent: #4acaca;
+  /* --color-accent: rgb(74, 202, 202); */
   --color-body: hsl(180, 6%, 6%);
   /* --color-body: #333; */
   --transition-duration: 0.3s;
