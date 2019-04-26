@@ -1,8 +1,0 @@
-{
-  "name": "typescript",
-  "version": "2.5.0",
-  "private": true,
-  "dependencies": {
-    "typescript": "^3.4.5"
-  }
-}

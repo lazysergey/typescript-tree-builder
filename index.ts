@@ -1,5 +1,5 @@
-import './style.css';
-import './style-tree.css';
+import './styles/style.css';
+import './styles/style-tree.css';
 import { Person } from "./person";
 import { TreeBuilderService } from "./tree-builder.service";
 
