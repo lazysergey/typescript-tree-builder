@@ -1,0 +1,47 @@
+/* based on https://codepen.io/patrickhlauke/pen/azbYWZ */
+
+#tree {
+    font-family: monospace;
+    font-size: 1em;
+    line-height: 1.1;
+    -webkit-text-size-adjust: none;
+}
+
+#tree {
+    padding-left: 20px;
+}
+
+#tree>ul>li>ul {
+    margin-left: 5px;
+}
+
+ul,
+li {
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul>li::before {
+    content: "";
+}
+
+ul>li>ul>li::before {
+    content: "├──\00a0";
+}
+
+ul>li>ul>li>ul>li::before {
+    content: "│\00a0\00a0\00a0├──\00a0"
+}
+
+ul>li>ul>li>ul>li>ul>li::before {
+    content: "│\00a0\00a0\00a0│\00a0\00a0\00a0├──\00a0"
+}
+
+ul>li>ul>li>ul>li>ul>li>ul>li::before {
+    content: "│\00a0\00a0\00a0│\00a0\00a0\00a0│\00a0\00a0\00a0├──\00a0"
+}
+
+ul>li>ul>li>ul>li>ul>li>ul>li>ul>li::before {
+    content: "│\00a0\00a0\00a0│\00a0\00a0\00a0│\00a0\00a0\00a0│\00a0\00a0\00a0├──\00a0"
+}

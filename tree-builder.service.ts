@@ -21,7 +21,7 @@ export class TreeBuilderService {
   }
 
   private _buildHtml(node: Person, parentElement: HTMLElement) {
-    parentElement = parentElement ? parentElement : document.getElementById('tree');
+    parentElement = parentElement ? parentElement.querySelector('li') : document.getElementById('tree');
     const newUlElement = document.createElement("ul");
     newUlElement.innerHTML += `<li title="depth: ${node.depth}">${node.name}</li>`;
     parentElement.append(newUlElement);
