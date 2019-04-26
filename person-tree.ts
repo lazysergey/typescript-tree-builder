@@ -48,7 +48,7 @@ export class PersonTree {
   private _buildHtml(node: Person, parentElement: HTMLElement) {
     parentElement = parentElement ? parentElement.querySelector('li') : document.getElementById('tree');
     const newUlElement = document.createElement("ul");
-    newUlElement.innerHTML += `<li data-name="${node.name}" title="Element depth: ${node.depth}">${node.name}</li>`;
+    newUlElement.innerHTML += `<li data-name="${node.name}" data-depth="${node.depth}" title="Element depth: ${node.depth}">${node.name}</li>`;
     parentElement.append(newUlElement);
     node.children.forEach(
       child => this._buildHtml(child, newUlElement || parentElement)
