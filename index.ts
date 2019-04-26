@@ -2,6 +2,7 @@ import './styles/style.css';
 import './styles/style-tree.css';
 import { Person } from "./person";
 import { TreeBuilderService } from "./tree-builder.service";
+import { InputHandler } from "./input-handler";
 
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
@@ -15,9 +16,13 @@ const people = {
   Mark: ["Josef"],
 };
 
+
+
 const treeBuilder = new TreeBuilderService();
 const tree: Person[] = treeBuilder.buildTree(people);
 
+const inputHandler = new InputHandler();
+inputHandler.onKeyUp().subscribe(input => console.log(input));
 
 console.log("========== DONE ==========");
 // console.log(tree);
@@ -29,3 +34,4 @@ console.log(treeBuilder.findRelations("Ben", "Kalin"));
 console.log(treeBuilder.findRelations("Kalin","Ben"));
 console.log(treeBuilder.findRelations("David", "Kalin"));
 console.log("==========================");
+
