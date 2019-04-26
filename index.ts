@@ -4,7 +4,6 @@ import { Person } from "./person";
 import { PersonTree } from "./person-tree";
 import { InputHandler } from "./input-handler";
 
-// Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>Tree Builder</h1>`;
 
@@ -16,11 +15,11 @@ const people = {
   Mark: ["Josef"],
 };
 
-
-
-const treeBuilder = new PersonTree(people);
+const personTree = new PersonTree(people);
 
 const inputHandler = new InputHandler();
-inputHandler.onKeyUp().subscribe(data => 
-  inputHandler.result = treeBuilder.findRelations(data.input1, data.input2)
+inputHandler.onKeyUp().subscribe(data =>
+  inputHandler.result = personTree.findRelations(data.input1, data.input2)
 );
+
+console.log("%cGenerated tree:", "background:rgba(0,255,0,0.5);padding:4px 8px; border-radius: 4px;", personTree.tree)

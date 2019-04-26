@@ -4,7 +4,7 @@ export class PersonTree {
   private _tree: Person[] = [];
   private _input: { [name: string]: string[] };
 
-  constructor(input) { 
+  constructor(input) {
     this._buildTree(input);
   }
 
@@ -28,6 +28,10 @@ export class PersonTree {
     return allParentsIds;
   }
 
+  get tree() {
+    return this._tree;
+  }
+
   private _buildTree(input): Person[] {
     this._input = input;
     this._parseRoots().forEach(
@@ -44,7 +48,7 @@ export class PersonTree {
   private _buildHtml(node: Person, parentElement: HTMLElement) {
     parentElement = parentElement ? parentElement.querySelector('li') : document.getElementById('tree');
     const newUlElement = document.createElement("ul");
-    newUlElement.innerHTML += `<li title="depth: ${node.depth}">${node.name}</li>`;
+    newUlElement.innerHTML += `<li data-name="${node.name}" title="Element depth: ${node.depth}">${node.name}</li>`;
     parentElement.append(newUlElement);
     node.children.forEach(
       child => this._buildHtml(child, newUlElement || parentElement)
@@ -72,20 +76,20 @@ export class PersonTree {
       return `${name2} - name not found`;
     }
 
-    if(!this._isInSameRoot(name1, name2)){
+    if (!this._isInSameRoot(name1, name2)) {
       return "Not relatives";
     }
-    
-    let depthDelta = this._getDepthDelta(person1, person2);    
+
+    let depthDelta = this._getDepthDelta(person1, person2);
     let relationKey;
     if (depthDelta < 0) {
-      if (person1.descendants.includes(person2)){
+      if (person1.descendants.includes(person2)) {
         relationKey = "Father";
       } else {
         relationKey = "Uncle"
       }
-    } else if (depthDelta > 0){
-      if (person2.descendants.includes(person1)){
+    } else if (depthDelta > 0) {
+      if (person2.descendants.includes(person1)) {
         relationKey = "Child";
       } else {
         relationKey = "Nephew"
@@ -96,7 +100,7 @@ export class PersonTree {
     return `${person1.name} is the <span>${this._getGrandTItle(depthDelta)}${relationKey}</span> of ${person2.name}`
   }
 
-  private _getGrandTItle(depthDelta: number):string{
+  private _getGrandTItle(depthDelta: number): string {
     const repeatCount = depthDelta === 0 ? 0 : Math.abs(depthDelta) - 1;
     return "Grand".repeat(repeatCount);
   }
@@ -104,8 +108,8 @@ export class PersonTree {
   private _getDepthDelta(person1: Person, person2: Person): number {
     return person1.depth - person2.depth;
   }
-  private _isInSameRoot(name1: string, name2: string): boolean{	   
-    return this._findRoot(name1) === this._findRoot(name2);	
+  private _isInSameRoot(name1: string, name2: string): boolean {
+    return this._findRoot(name1) === this._findRoot(name2);
   }
 
   private _findPerson(nameToSearch: string): Person {
