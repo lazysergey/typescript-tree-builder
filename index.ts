@@ -20,6 +20,12 @@ const tree: Person[] = treeBuilder.buildTree(people);
 
 
 console.log("========== DONE ==========");
-console.log(tree);
-console.log(treeBuilder.findPerson('John'))
+// console.log(tree);
+// console.log(treeBuilder.findPerson('Josef'))
+// console.log(treeBuilder.findPerson('Josf'))
+// console.log(treeBuilder.findRoot('Ron'))
+console.log(treeBuilder.findRelations("Josef", "Mark"));
+console.log(treeBuilder.findRelations("Ben", "Kalin"));
+console.log(treeBuilder.findRelations("Kalin","Ben"));
+console.log(treeBuilder.findRelations("David", "Kalin"));
 console.log("==========================");

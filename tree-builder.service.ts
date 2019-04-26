@@ -1,23 +1,21 @@
 import { Person } from "./person";
 
 export class TreeBuilderService {
-  private _result: Person[] = [];
+  private _tree: Person[] = [];
   private _input: { [name: string]: string[] };
   constructor() { }
 
   buildTree(input): Person[] {
     this._input = input;
-    this._findRoots().forEach(
+    this._parseRoots().forEach(
       root => {
         this._createNodes(root);
       }
     );
-
-    this._result.forEach(node => {
+    this._tree.forEach(node => {
       this._buildHtml(node, null);
     });
-
-    return this._result;
+    return this._tree;
   }
 
   private _buildHtml(node: Person, parentElement: HTMLElement) {
@@ -31,7 +29,7 @@ export class TreeBuilderService {
   }
 
   private _createNodes(name: string, parent: Person = null) {
-    let arrayForCurrentNode = parent ? parent.children : this._result;
+    let arrayForCurrentNode = parent ? parent.children : this._tree;
     const newPerson = new Person(name, parent ? parent : null, [], (parent ? (parent.depth + 1) : 0));
     arrayForCurrentNode.push(newPerson);
     if (this._input[name]) {
@@ -41,7 +39,7 @@ export class TreeBuilderService {
     }
   }
 
-  private _findRoots() {
+  private _parseRoots() {
     let allChildrenIds = [];
     let allParentsIds = [];
     Object.keys(this._input).forEach(person => {
@@ -58,65 +56,64 @@ export class TreeBuilderService {
         allParentsIds.splice(parentIndex, 1)
       }
     })
-    // this._roots = 
     return allParentsIds;
   }
 
-  public findRelations(tree: Person[], name1: string, name2: string) {
-    let branchForName1, branchForName2;
-    tree.find(branch => {
-      const namesArr = branch.descendants.map(a => a.name);
-      return !!(namesArr.indexOf(name1) + 1);// || 
-    })
+  public findRelations(name1: string, name2: string) {
+    const depth = this._getDepthDifference(name1, name2);
+    let relationKey;
+    if(!depth){
+      return "not relatives";
+    }
+    if(depth < 0) {
+      relationKey = "Father";
+    } else {
+      relationKey = "Child";
+    }      
+    return `${name1} is ${"Grand".repeat(Math.abs(depth) - 1)}${relationKey} of ${name2}`
+  }
+
+  private _getDepthDifference(name1: string, name2: string){
+    let person1: Person, person2: Person;
+    if(this._isInSameRoot(name1, name2)){
+      person1 = this.findPerson(name1);
+      // console.log(person1);
+      person2 = this.findPerson(name2);
+      //  console.log(person2);
+      return person1.depth - person2.depth;
+    } else {
+      return null;
+    }
+  }
+
+  private _isInSameRoot(name1, name2){
+    const root1 = this.findRoot(name1);
+    // console.log(root1)
+    const root2 = this.findRoot(name2);
+    // console.log(root2);
+    // console.log("sameroot: ",root1 === root2);
+    return root1 === root2;
   }
 
   public findPerson(nameToSearch: string) {
-    this._result.forEach(r => this.doSearch(r, nameToSearch))
+    let root = this.findRoot(nameToSearch);
+    return root? this.searchRecursively(root, nameToSearch) : null;
   }
 
-  private doSearch(person, nameToSearch){
+  public findRoot(nameToSearch){
+    return this._tree.find(root => root.descendants.map(d => d.name).includes(nameToSearch) || root.name == nameToSearch);
+  }
+
+  private searchRecursively(person, nameToSearch) {
     if (person.name == nameToSearch) {
       return person;
     } else if (person.children) {
-      let i;
       let result = null;
       for (let i = 0; result == null && i < person.children.length; i++) {
-        result = this.doSearch(person.children[i], nameToSearch);
+        result = this.searchRecursively(person.children[i], nameToSearch);
       }
       return result;
     }
     return null;
   }
-
-  // public findRelations(tree: Person[], name1: string, name2: string) {
-  //   let branchForName1, branchForName2;
-  //   tree.find(branch => {
-  //     const namesArr = branch.descendants.map(a => a.name);
-  //     return !!(namesArr.indexOf(name1) + 1);// || 
-  //   })
-  // }
-
-  // nodeSearch(treeNodes, searchID) {
-  //   for (var nodeIdx = 0; nodeIdx <= treeNodes.length - 1; nodeIdx++) {
-  //     var currentNode = treeNodes[nodeIdx],
-  //       currentId = currentNode.id,
-  //       currentChildren = currentNode.children;
-  //     console.log("Comparing treeNodes element with ID==" +
-  //       currentId + " to SearchID==" + searchID);
-  //     if (currentId == searchID) {
-  //       console.log("Match!");
-  //       return currentNode;
-  //     }
-  //     else {
-  //       console.log("No Match! Trying " + currentChildren.length +
-  //         " Children of Node ID#" + currentId);
-  //       var foundDescendant = this.nodeSearch(currentChildren, searchID);
-  //       if (foundDescendant) {
-  //         return foundDescendant;
-  //       }
-  //     }
-  //   }
-  //   console.log("Done trying " + treeNodes.length + " children. Returning False");
-  //   return false;
-  // };
 }

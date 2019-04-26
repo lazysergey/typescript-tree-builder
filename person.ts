@@ -1,5 +1,5 @@
 export class Person {
-  private _descendants: Person[];
+  private _descendants: Array<Person>;
   private _name: string;
   private _parent: Person;
   private _children: Person[];
@@ -11,7 +11,7 @@ export class Person {
     children: Person[],
     depth: number
   ) {
-    console.log(`%c--- new Person: ${name} ---`, "border: 1px solid red;color: #444;");
+    // console.log(`%c--- new Person: ${name} ---`, "border: 1px solid red;color: #444;");
     this._descendants = [];
     this._name = name;
     this._parent = parent;
@@ -57,7 +57,7 @@ export class Person {
     let node: Person = this;
     const color: string = this._getRandomRGBColor();
     while (node.parent) {
-      console.log(`%cadding descendant: ${this.name} > ${node.parent.name} (depth: ${this._depth})`, `background: ${color}`);
+      // console.log(`%cadding descendant: ${this.name} > ${node.parent.name} (depth: ${this._depth})`, `background: ${color}`);
       node.parent.addDescendant(this);
       node = node.parent;
     }
