@@ -58,7 +58,34 @@ export class TreeBuilderService {
         allParentsIds.splice(parentIndex, 1)
       }
     })
+    // this._roots = 
     return allParentsIds;
+  }
+
+  public findRelations(tree: Person[], name1: string, name2: string) {
+    let branchForName1, branchForName2;
+    tree.find(branch => {
+      const namesArr = branch.descendants.map(a => a.name);
+      return !!(namesArr.indexOf(name1) + 1);// || 
+    })
+  }
+
+  public findPerson(nameToSearch: string) {
+    this._result.forEach(r => this.doSearch(r, nameToSearch))
+  }
+
+  private doSearch(person, nameToSearch){
+    if (person.name == nameToSearch) {
+      return person;
+    } else if (person.children) {
+      let i;
+      let result = null;
+      for (let i = 0; result == null && i < person.children.length; i++) {
+        result = this.doSearch(person.children[i], nameToSearch);
+      }
+      return result;
+    }
+    return null;
   }
 
   // public findRelations(tree: Person[], name1: string, name2: string) {

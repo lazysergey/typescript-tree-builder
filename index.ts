@@ -15,9 +15,11 @@ const people = {
   Mark: ["Josef"],
 };
 
-const tree: Person[] = new TreeBuilderService().buildTree(people);
+const treeBuilder = new TreeBuilderService();
+const tree: Person[] = treeBuilder.buildTree(people);
 
 
 console.log("========== DONE ==========");
 console.log(tree);
+console.log(treeBuilder.findPerson('John'))
 console.log("==========================");
